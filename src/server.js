@@ -31,6 +31,8 @@ const adminAiRoutes = require('./routes/admin/aiMonitoring');
 const adminRolesRoutes = require('./routes/admin/roles');
 const adminAuditRoutes = require('./routes/admin/auditLogs');
 const adminDashboardRoutes = require('./routes/admin/dashboard');
+const adminUsersRoutes = require('./routes/admin/users');
+const adminApplicationsRoutes = require('./routes/admin/applications');
 const universityDashboardRoutes = require('./routes/universityDashboard');
 const messagesRoutes = require('./routes/messages');
 const webRoutes = require('./routes/web');
@@ -94,6 +96,8 @@ app.use('/api/admin/ai', adminAiRoutes);
 app.use('/api/admin/roles', adminRolesRoutes);
 app.use('/api/admin/audit-logs', adminAuditRoutes);
 app.use('/api/admin/dashboard', adminDashboardRoutes);
+app.use('/api/admin/users', adminUsersRoutes);
+app.use('/api/admin/applications', adminApplicationsRoutes);
 app.use('/api/universities/dashboard', universityDashboardRoutes);
 app.use('/api/messages', messagesRoutes);
 

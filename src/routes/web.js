@@ -22,6 +22,11 @@ router.get('/university/dashboard', (req, res) => {
   res.render('university/dashboard');
 });
 
+// Student dashboard
+router.get('/student/dashboard', (req, res) => {
+  res.render('student/dashboard');
+});
+
 // Root redirect
 router.get('/', (req, res) => {
   res.redirect('/login');

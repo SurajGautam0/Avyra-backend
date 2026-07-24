@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Avyra</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button class="mobile-toggle" id="mobileToggle">☰</button>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo"><span class="logo-gradient">Avyra</span></div>
+        <span class="badge badge-university">Student</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-section="overview"><span class="nav-icon">📊</span> Dashboard</a>
+        <a class="nav-item" data-section="applications"><span class="nav-icon">📋</span> Applications</a>
+        <a class="nav-item" data-section="universities"><span class="nav-icon">🏛️</span> Universities</a>
+        <a class="nav-item" data-section="documents"><span class="nav-icon">📄</span> Documents</a>
+        <a class="nav-item" data-section="visa"><span class="nav-icon">🛂</span> Visa</a>
+        <a class="nav-item" data-section="chat"><span class="nav-icon">💬</span> Chat</a>
+        <a class="nav-item" data-section="profile"><span class="nav-icon">👤</span> Profile</a>
+        <a class="nav-item" data-section="settings"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar" id="studentAvatar">S</div>
+        <div class="user-info">
+          <span id="studentName">Student</span>
+          <small id="studentEmail"></small>
+        </div>
+        <button id="logoutBtn" class="btn btn-ghost btn-icon" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="dashboard-header">
+        <div class="header-left">
+          <span class="eyebrow">Student Portal</span>
+          <h1>Welcome, <span id="greetingName">Student</span></h1>
+          <span class="subtitle">Track your applications and study abroad journey</span>
+        </div>
+        <div class="header-actions">
+          <small id="lastUpdated"></small>
+          <button id="refreshBtn" class="btn btn-outline btn-sm">🔄 Refresh</button>
+        </div>
+      </div>
+
+      <section id="section-overview" class="section active">
+        <div id="studentOverview"></div>
+        <div class="dashboard-grid cols-3" style="margin-top:20px">
+          <div class="card"><div class="card-header"><h3>📋 My Applications</h3></div><div class="card-body"><div id="studentAppList" class="list"></div></div></div>
+          <div class="card"><div class="card-header"><h3>📄 Recent Documents</h3></div><div class="card-body"><div id="studentDocList" class="list"></div></div></div>
+          <div class="card"><div class="card-header"><h3>🛂 Visa Status</h3></div><div class="card-body"><div id="studentVisaStatus" style="padding:20px 0;text-align:center;color:var(--text-light)">Not started</div></div></div>
+        </div>
+      </section>
+
+      <section id="section-applications" class="section">
+        <div class="card"><div class="card-header"><h3>📋 My Applications</h3></div><div class="card-body"><div class="table-wrapper"><table><thead><tr><th>University</th><th>Course</th><th>Status</th><th>Stage</th><th>Progress</th></tr></thead><tbody id="myAppsTable"><tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-light)">Loading...</td></tr></tbody></table></div></div></div>
+      </section>
+
+      <section id="section-universities" class="section">
+        <div class="empty-state"><div class="empty-icon">🏛️</div><h3>Universities</h3><p>Browse and compare partner universities</p></div>
+      </section>
+
+      <section id="section-documents" class="section">
+        <div class="empty-state"><div class="empty-icon">📄</div><h3>Documents</h3><p>Upload and manage your documents</p></div>
+      </section>
+
+      <section id="section-visa" class="section">
+        <div class="empty-state"><div class="empty-icon">🛂</div><h3>Visa</h3><p>Track your visa application process</p></div>
+      </section>
+
+      <section id="section-chat" class="section">
+        <div class="empty-state"><div class="empty-icon">💬</div><h3>Chat</h3><p>Message your consultant</p></div>
+      </section>
+
+      <section id="section-profile" class="section">
+        <div class="empty-state"><div class="empty-icon">👤</div><h3>Profile</h3><p>Manage your personal information</p></div>
+      </section>
+
+      <section id="section-settings" class="section">
+        <div class="empty-state"><div class="empty-icon">⚙️</div><h3>Settings</h3><p>Notification preferences and account settings</p></div>
+      </section>
+    </main>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/student-dashboard.js"></script>
+</body>
+</html>

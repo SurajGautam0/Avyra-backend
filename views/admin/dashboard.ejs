@@ -6,6 +6,7 @@
   <title>Admin Dashboard - Avyra</title>
   <link rel="stylesheet" href="/css/dashboard.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <button class="mobile-toggle" id="mobileToggle">☰</button>
@@ -17,17 +18,16 @@
       </div>
       <nav class="sidebar-nav">
         <a class="nav-item active" data-section="overview"><span class="nav-icon">📊</span> Dashboard</a>
-        <a class="nav-item" data-section="students"><span class="nav-icon">👥</span> Students</a>
-        <a class="nav-item" data-section="consultants"><span class="nav-icon">👨‍🏫</span> Consultants</a>
+        <a class="nav-item" data-section="students"><span class="nav-icon">👥</span> Students <span class="nav-badge" id="navStudents">0</span></a>
+        <a class="nav-item" data-section="consultants"><span class="nav-icon">👨‍🏫</span> Consultants <span class="nav-badge" id="navConsultants">0</span></a>
+        <a class="nav-item" data-section="applications"><span class="nav-icon">📋</span> Applications <span class="nav-badge" id="navApps">0</span></a>
         <a class="nav-item" data-section="universities"><span class="nav-icon">🏛️</span> Universities</a>
-        <a class="nav-item" data-section="applications"><span class="nav-icon">📋</span> Applications <span class="nav-badge">12</span></a>
-        <a class="nav-item" data-section="kyc"><span class="nav-icon">✅</span> KYC Verification</a>
+        <a class="nav-item" data-section="kyc"><span class="nav-icon">✅</span> KYC <span class="nav-badge" id="navKyc">0</span></a>
         <a class="nav-item" data-section="payments"><span class="nav-icon">💳</span> Payments</a>
-        <a class="nav-item" data-section="ai"><span class="nav-icon">🤖</span> AI Monitoring</a>
         <a class="nav-item" data-section="roles"><span class="nav-icon">🔐</span> Roles & Permissions</a>
         <a class="nav-item" data-section="audit"><span class="nav-icon">📜</span> Audit Logs</a>
         <a class="nav-item" data-section="reports"><span class="nav-icon">📈</span> Reports</a>
-        <a class="nav-item" data-section="support"><span class="nav-icon">🎫</span> Support Tickets</a>
+        <a class="nav-item" data-section="support"><span class="nav-icon">🎫</span> Support</a>
         <a class="nav-item" data-section="settings"><span class="nav-icon">⚙️</span> Settings</a>
       </nav>
       <div class="sidebar-footer">
@@ -45,192 +45,97 @@
         <div class="header-left">
           <span class="eyebrow">Admin Portal</span>
           <h1>Dashboard</h1>
-          <span class="subtitle">Platform overview and key metrics</span>
+          <span class="subtitle">Platform overview and management</span>
         </div>
         <div class="header-actions">
+          <button id="exportBtn" class="btn btn-outline btn-sm">📥 Export CSV</button>
           <small id="lastUpdated">Updated just now</small>
           <button id="refreshBtn" class="btn btn-outline btn-sm">🔄 Refresh</button>
         </div>
       </div>
 
+      <!-- Overview -->
       <section id="section-overview" class="section active">
         <div class="kpi-row">
-          <div class="metric-card">
-            <div class="metric-icon" style="background:rgba(108,92,231,0.1);color:#6c5ce7;">👥</div>
-            <span class="metric-label">Total Users</span>
-            <div class="metric-value" id="statTotalUsers">-</div>
-            <div class="metric-change up">↑ +634 this month</div>
-            <div class="metric-bar"><span style="width:78%;background:#6c5ce7;"></span></div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background:rgba(0,184,148,0.1);color:#00b894;">🏛️</div>
-            <span class="metric-label">Universities</span>
-            <div class="metric-value" id="statUniversities">-</div>
-            <div class="metric-change">· 12 countries</div>
-            <div class="metric-bar"><span style="width:62%;background:#00b894;"></span></div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background:rgba(116,185,255,0.1);color:#0984e3;">👨‍🏫</div>
-            <span class="metric-label">Consultants</span>
-            <div class="metric-value" id="statConsultants">-</div>
-            <div class="metric-change up">↑ 96% verified</div>
-            <div class="metric-bar"><span style="width:96%;background:#0984e3;"></span></div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon" style="background:rgba(253,203,110,0.15);color:#b7950b;">💵</div>
-            <span class="metric-label">Monthly Revenue</span>
-            <div class="metric-value" id="statRevenue">-</div>
-            <div class="metric-change up">↑ +13.6% MoM</div>
-            <div class="metric-bar"><span style="width:58%;background:#fdcb6e;"></span></div>
-          </div>
+          <div class="metric-card"><div class="metric-icon" style="background:rgba(108,92,231,0.1);color:#6c5ce7;">👥</div><span class="metric-label">Total Users</span><div class="metric-value" id="statTotalUsers">-</div><div class="metric-change up" id="statUsersChange"></div><div class="metric-bar"><span style="width:78%;background:#6c5ce7;"></span></div></div>
+          <div class="metric-card"><div class="metric-icon" style="background:rgba(0,184,148,0.1);color:#00b894;">🏛️</div><span class="metric-label">Universities</span><div class="metric-value" id="statUniversities">-</div><div class="metric-change" id="statUniChange"></div><div class="metric-bar"><span style="width:62%;background:#00b894;"></span></div></div>
+          <div class="metric-card"><div class="metric-icon" style="background:rgba(116,185,255,0.1);color:#0984e3;">👨‍🏫</div><span class="metric-label">Consultants</span><div class="metric-value" id="statConsultants">-</div><div class="metric-change up" id="statConsChange"></div><div class="metric-bar"><span style="width:96%;background:#0984e3;"></span></div></div>
+          <div class="metric-card"><div class="metric-icon" style="background:rgba(253,203,110,0.15);color:#b7950b;">📋</div><span class="metric-label">Applications</span><div class="metric-value" id="statApplications">-</div><div class="metric-change" id="statAppChange"></div><div class="metric-bar"><span style="width:58%;background:#fdcb6e;"></span></div></div>
         </div>
 
         <div class="dashboard-grid cols-2">
-          <div class="card">
-            <div class="card-header">
-              <h3>📈 Revenue & User Growth</h3>
-            </div>
-            <div class="card-body">
-              <div id="signupsChart" class="bar-chart"></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <h3>🌍 Top Countries</h3>
-            </div>
-            <div class="card-body">
-              <div id="topCountries"></div>
-            </div>
-          </div>
+          <div class="card"><div class="card-header"><h3>📈 User Growth & Applications</h3></div><div class="card-body"><canvas id="growthChart" height="220"></canvas></div></div>
+          <div class="card"><div class="card-header"><h3>🎭 Role Distribution</h3></div><div class="card-body"><canvas id="roleChart" height="220"></canvas></div></div>
         </div>
 
-        <div class="dashboard-grid cols-1-2">
-          <div class="card">
-            <div class="card-header">
-              <h3>⚡ Recent Activity</h3>
-            </div>
-            <div class="card-body">
-              <div id="recentActivity" class="list"></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <h3>🔔 System Alerts</h3>
-            </div>
-            <div class="card-body">
-              <div class="alert-list">
-                <div class="alert-item"><span class="alert-icon">ℹ️</span> High traffic detected — 634 users online</div>
-                <div class="alert-item"><span class="alert-icon">⚠️</span> 14 support tickets need attention</div>
-                <div class="alert-item"><span class="alert-icon">🔴</span> Payment gateway response time elevated</div>
-              </div>
-            </div>
-          </div>
+        <div class="dashboard-grid cols-2">
+          <div class="card"><div class="card-header"><h3>🌍 Top Nationalities</h3></div><div class="card-body"><div id="topCountries"></div></div></div>
+          <div class="card"><div class="card-header"><h3>📊 Application Stages</h3></div><div class="card-body"><canvas id="stageChart" height="220"></canvas></div></div>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            <h3>🔥 Popular Programs</h3>
-          </div>
-          <div class="card-body">
-            <div id="popularPrograms" class="list"></div>
-          </div>
-        </div>
+        <div class="card"><div class="card-header"><h3>⚡ Recent Audit Logs</h3></div><div class="card-body"><div id="recentActivity" class="list"></div></div></div>
       </section>
 
+      <!-- Students -->
       <section id="section-students" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">👥</div>
-          <h3>Student Management</h3>
-          <p>Coming soon — full student CRUD and analytics</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>👥 Students</h2><span class="tag" id="studentsTotal">0 total</span></div><div class="toolbar-right"><input class="search-input" id="studentsSearch" placeholder="Search students..."><select class="filter-select" id="studentsFilter"><option value="">All</option><option value="active">Active</option><option value="pending">Pending</option><option value="suspended">Suspended</option></select></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>KYC</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="studentsTable"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
+      <!-- Consultants -->
       <section id="section-consultants" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">👨‍🏫</div>
-          <h3>Consultant Management</h3>
-          <p>Coming soon — verify, manage and monitor consultants</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>👨‍🏫 Consultants</h2><span class="tag" id="consTotal">0 total</span></div><div class="toolbar-right"><input class="search-input" id="consSearch" placeholder="Search consultants..."></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Students</th><th>Verified</th><th>Actions</th></tr></thead><tbody id="consTable"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
-      <section id="section-universities" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">🏛️</div>
-          <h3>University Management</h3>
-          <p>Coming soon — add, edit and track partner universities</p>
-        </div>
-      </section>
-
+      <!-- Applications -->
       <section id="section-applications" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">📋</div>
-          <h3>Applications</h3>
-          <p>Coming soon — review and manage student applications</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>📋 Applications</h2><span class="tag" id="appsTotal">0 total</span></div><div class="toolbar-right"><select class="filter-select" id="appsFilter"><option value="">All Status</option><option value="draft">Draft</option><option value="submitted">Submitted</option><option value="reviewing">Reviewing</option><option value="accepted">Accepted</option><option value="rejected">Rejected</option></select></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Student</th><th>University</th><th>Course</th><th>Status</th><th>Stage</th><th>Date</th></tr></thead><tbody id="appsTable"><tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
+      <!-- Universities -->
+      <section id="section-universities" class="section">
+        <div class="toolbar"><div class="toolbar-left"><h2>🏛️ Universities</h2><span class="tag" id="uniTotal">0 total</span></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Country</th><th>Ranking</th><th>Courses</th><th>Status</th></tr></thead><tbody id="uniTable"><tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
+      </section>
+
+      <!-- KYC -->
       <section id="section-kyc" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">✅</div>
-          <h3>KYC Verification</h3>
-          <p>Coming soon — verify user identities and documents</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>✅ KYC Verification</h2><span class="tag" id="kycTotal">0 pending</span></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Student</th><th>Email</th><th>Documents</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="kycTable"><tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
+      <!-- Payments -->
       <section id="section-payments" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">💳</div>
-          <h3>Payments</h3>
-          <p>Coming soon — transaction history and payout management</p>
-        </div>
+        <div class="empty-state"><div class="empty-icon">💳</div><h3>Payments</h3><p>Transaction history and payout management — coming soon</p></div>
       </section>
 
-      <section id="section-ai" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">🤖</div>
-          <h3>AI Monitoring</h3>
-          <p>Coming soon — model performance and usage analytics</p>
-        </div>
-      </section>
-
+      <!-- Roles -->
       <section id="section-roles" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">🔐</div>
-          <h3>Roles & Permissions</h3>
-          <p>Coming soon — role-based access control management</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>🔐 Roles & Permissions</h2></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Role</th><th>Users</th><th>Permissions</th></tr></thead><tbody id="rolesTable"><tr><td colspan="3" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
+      <!-- Audit -->
       <section id="section-audit" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">📜</div>
-          <h3>Audit Logs</h3>
-          <p>Coming soon — system activity and change tracking</p>
-        </div>
+        <div class="toolbar"><div class="toolbar-left"><h2>📜 Audit Logs</h2></div></div>
+        <div class="card"><div class="table-wrapper"><table><thead><tr><th>Action</th><th>User</th><th>Resource</th><th>Time</th><th>Severity</th></tr></thead><tbody id="auditTable"><tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-light);">Loading...</td></tr></tbody></table></div></div>
       </section>
 
+      <!-- Reports -->
       <section id="section-reports" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">📈</div>
-          <h3>Reports</h3>
-          <p>Coming soon — exportable analytics and custom reports</p>
-        </div>
+        <div class="empty-state"><div class="empty-icon">📈</div><h3>Reports</h3><p>Exportable analytics and custom reports — coming soon</p></div>
       </section>
 
+      <!-- Support -->
       <section id="section-support" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">🎫</div>
-          <h3>Support Tickets</h3>
-          <p>Coming soon — ticket management and resolution tracking</p>
-        </div>
+        <div class="empty-state"><div class="empty-icon">🎫</div><h3>Support Tickets</h3><p>Ticket management and resolution tracking — coming soon</p></div>
       </section>
 
+      <!-- Settings -->
       <section id="section-settings" class="section">
-        <div class="empty-state">
-          <div class="empty-icon">⚙️</div>
-          <h3>Settings</h3>
-          <p>Coming soon — platform configuration and preferences</p>
-        </div>
+        <div class="empty-state"><div class="empty-icon">⚙️</div><h3>Settings</h3><p>Platform configuration and preferences — coming soon</p></div>
       </section>
     </main>
   </div>
