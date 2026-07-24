@@ -50,6 +50,19 @@ router.get('/', authenticate, authorize('admin'), async (req, res) => {
       }
     });
 
+    // Top countries by user nationality
+    const nationalityCounts = {};
+    users.forEach((u) => {
+      if (u.nationality) {
+        nationalityCounts[u.nationality] = (nationalityCounts[u.nationality] || 0) + 1;
+      }
+    });
+    const totalNationalities = Object.values(nationalityCounts).reduce((a, b) => a + b, 0) || 1;
+    const topCountries = Object.entries(nationalityCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6)
+      .map(([name, count]) => ({ name, value: count, percent: Math.round((count / totalNationalities) * 100) }));
+
     res.json({
       overview: {
         totalUsers: users.length,
@@ -66,6 +79,7 @@ router.get('/', authenticate, authorize('admin'), async (req, res) => {
       monthlySignups: Object.entries(monthlySignups).map(([month, count]) => ({ month, count })),
       monthlyApplications: Object.entries(monthlyApplications).map(([month, count]) => ({ month, count })),
       recentAuditLogs: audits,
+      topCountries,
     });
   } catch (error) {
     console.error('Admin dashboard error:', error);

@@ -23,10 +23,12 @@ async function loadDashboard() {
 
 function updateKPI() {
   const o=dashboardData?.overview||{};
-  setText('statTotalUsers', (o.totalUsers||7640).toLocaleString());
-  setText('statUniversities', (o.totalUniversities||248).toLocaleString());
-  setText('statConsultants', (o.totalConsultants||182).toLocaleString());
-  setText('statRevenue', o.monthlyRevenue?'$'+(o.monthlyRevenue).toLocaleString():'$44,200');
+  const roles=dashboardData?.roleDistribution||[];
+  const consultantCount=roles.find(r=>r.role==='consultant')?.count||0;
+  setText('statTotalUsers', (o.totalUsers||0).toLocaleString());
+  setText('statUniversities', (o.totalUniversities||0).toLocaleString());
+  setText('statConsultants', consultantCount.toLocaleString());
+  setText('statRevenue', o.monthlyRevenue?'$'+(o.monthlyRevenue).toLocaleString():'—');
 }
 
 function setText(id,v) { const e=document.getElementById(id);if(e) e.textContent=v; }
