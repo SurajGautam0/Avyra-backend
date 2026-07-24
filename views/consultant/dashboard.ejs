@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,62 @@
   <link rel="stylesheet" href="/css/dashboard.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <div class="app-layout">
     <aside class="sidebar">
       <div class="sidebar-header">
-        <div class="logo">Avyra</div>
+        <div class="logo">EduBridge</div>
         <span class="badge badge-consultant">Consultant</span>
       </div>
       <nav class="sidebar-nav">
         <a href="#" class="nav-item active" data-section="overview">
-          <span class="nav-icon">&#9632;</span> Overview
+          <span class="nav-icon">&#9632;</span> Dashboard
         </a>
-        <a href="#" class="nav-item" data-section="students">
-          <span class="nav-icon">&#9632;</span> Students
+        <a href="#" class="nav-item" data-section="requests">
+          <span class="nav-icon">&#9632;</span> Student Requests
         </a>
-        <a href="#" class="nav-item" data-section="documents">
-          <span class="nav-icon">&#9632;</span> Document Queue
+        <a href="#" class="nav-item" data-section="crm">
+          <span class="nav-icon">&#9632;</span> Student CRM
         </a>
         <a href="#" class="nav-item" data-section="insights">
-          <span class="nav-icon">&#9632;</span> Insights
+          <span class="nav-icon">&#9632;</span> AI Insights
+        </a>
+        <a href="#" class="nav-item" data-section="verification">
+          <span class="nav-icon">&#9632;</span> Doc Verification
+        </a>
+        <a href="#" class="nav-item" data-section="notes">
+          <span class="nav-icon">&#9632;</span> Notes
+        </a>
+        <a href="#" class="nav-item" data-section="calendar">
+          <span class="nav-icon">&#9632;</span> Calendar
+        </a>
+        <a href="#" class="nav-item" data-section="appointments">
+          <span class="nav-icon">&#9632;</span> Appointments
+        </a>
+        <a href="#" class="nav-item" data-section="chat">
+          <span class="nav-icon">&#9632;</span> Chat
+        </a>
+        <a href="#" class="nav-item" data-section="video">
+          <span class="nav-icon">&#9632;</span> Video Meetings
+        </a>
+        <a href="#" class="nav-item" data-section="documents">
+          <span class="nav-icon">&#9632;</span> Documents
+        </a>
+        <a href="#" class="nav-item" data-section="earnings">
+          <span class="nav-icon">&#9632;</span> Earnings
+        </a>
+        <a href="#" class="nav-item" data-section="reviews">
+          <span class="nav-icon">&#9632;</span> Reviews
+        </a>
+        <a href="#" class="nav-item" data-section="analytics">
+          <span class="nav-icon">&#9632;</span> Analytics
+        </a>
+        <a href="#" class="nav-item" data-section="profile">
+          <span class="nav-icon">&#9632;</span> Profile
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <span class="nav-icon">&#9632;</span> Settings
         </a>
       </nav>
       <div class="sidebar-footer">
@@ -37,86 +75,69 @@
       </div>
     </aside>
     <main class="main-content">
-      <header class="topbar">
-        <h2 id="pageTitle">Consultant Dashboard</h2>
-        <div class="topbar-actions">
-          <span id="lastUpdated"></span>
-          <button id="refreshBtn" class="btn btn-outline btn-sm">&#8635; Refresh</button>
+      <header class="dashboard-header">
+        <div class="header-copy">
+          <span class="eyebrow">Dashboard</span>
+          <h1>Welcome back, Dr. Priya</h1>
+          <p class="dashboard-subtitle">Your daily coaching workspace and student workflow overview</p>
+        </div>
+        <div class="header-actions">
+          <span id="lastUpdated">Updated just now</span>
+          <button id="refreshBtn" class="btn btn-outline btn-sm">Refresh</button>
         </div>
       </header>
 
-      <!-- Overview Section -->
-      <section id="section-overview" class="section active">
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Total Students</div><div class="stat-value" id="statStudents">-</div></div>
-          <div class="stat-card"><div class="stat-label">Active This Month</div><div class="stat-value" id="statActive">-</div></div>
-          <div class="stat-card"><div class="stat-label">Pending Docs</div><div class="stat-value" id="statPendingDocs">-</div></div>
-          <div class="stat-card"><div class="stat-label">Verified Docs</div><div class="stat-value" id="statVerifiedDocs">-</div></div>
+      <section id="section-overview" class="section active overview-section">
+        <div class="kpi-row">
+          <div class="metric-card">
+            <span class="metric-label">Today's Meetings</span>
+            <strong id="statMeetings">-</strong>
+            <span class="metric-meta">+2 from yesterday</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Monthly Revenue</span>
+            <strong id="statRevenue">-</strong>
+            <span class="metric-meta">+12% this month</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Pending Requests</span>
+            <strong id="statPendingRequests">-</strong>
+            <span class="metric-meta">Action required</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Active Students</span>
+            <strong id="statActiveStudents">-</strong>
+            <span class="metric-meta">+5 new</span>
+          </div>
         </div>
 
-        <div class="chart-row">
-          <div class="chart-card full">
-            <h3>Student Applications by University</h3>
-            <div class="bar-chart" id="uniApplicationsChart"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Students Section -->
-      <section id="section-students" class="section">
-        <div class="table-card">
-          <h3>My Students</h3>
-          <div class="table-controls">
-            <input type="text" id="studentSearch" placeholder="Search students..." class="search-input">
-            <select id="studentStatusFilter" class="filter-select">
-              <option value="">All Status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
-          </div>
-          <div class="table-wrapper">
-            <table id="studentsTable">
-              <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Status</th><th>Progress</th><th>Action</th></tr></thead>
-              <tbody id="studentsBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Document Queue Section -->
-      <section id="section-documents" class="section">
-        <div class="table-card">
-          <h3>Document Verification Queue</h3>
-          <div class="table-wrapper">
-            <table id="documentsTable">
-              <thead><tr><th>Student</th><th>Document</th><th>Uploaded</th><th>AI Score</th><th>Action</th></tr></thead>
-              <tbody id="documentsBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Insights Section -->
-      <section id="section-insights" class="section">
-        <div class="chart-row">
-          <div class="chart-card half">
-            <h3>AI Insights Summary</h3>
-            <div id="insightsSummary" class="insights-list"></div>
-          </div>
-          <div class="chart-card half">
-            <h3>Performance Metrics</h3>
-            <div id="performanceMetrics" class="insights-list"></div>
-          </div>
-        </div>
-        <div class="chart-row">
-          <div class="chart-card full">
-            <h3>Recent Notes</h3>
-            <div class="table-wrapper">
-              <table id="notesTable">
-                <thead><tr><th>Student</th><th>Note</th><th>Date</th></tr></thead>
-                <tbody id="notesBody"></tbody>
-              </table>
+        <div class="dashboard-grid">
+          <div class="chart-card chart-panel">
+            <div class="panel-header">
+              <h3>Revenue Overview</h3>
             </div>
+            <div id="revenueChart" class="bar-chart"></div>
+          </div>
+          <aside class="sidebar-panel schedule-panel panel-card">
+            <div class="panel-header">
+              <h3>Today's Schedule</h3>
+            </div>
+            <div id="scheduleList" class="schedule-list"></div>
+          </aside>
+        </div>
+
+        <div class="dashboard-grid dashboard-grid-2">
+          <div class="panel-card request-panel">
+            <div class="panel-header">
+              <h3>New Requests</h3><span class="panel-tag" id="pendingCount">0 Pending</span>
+            </div>
+            <div id="newRequests" class="request-list"></div>
+          </div>
+          <div class="panel-card progress-panel">
+            <div class="panel-header">
+              <h3>Student Progress</h3>
+            </div>
+            <div id="progressList" class="progress-list"></div>
           </div>
         </div>
       </section>
@@ -125,4 +146,5 @@
   <script src="/js/api.js"></script>
   <script src="/js/consultant-dashboard.js"></script>
 </body>
+
 </html>
