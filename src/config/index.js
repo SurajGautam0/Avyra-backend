@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ override: true });
 
 module.exports = {
   port: parseInt(process.env.PORT, 10) || 4000,
