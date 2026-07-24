@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Dashboard - Avyra</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">Avyra</div>
+        <span class="badge badge-university">University</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+          <span class="nav-icon">&#9632;</span> Overview
+        </a>
+        <a href="#" class="nav-item" data-section="applications">
+          <span class="nav-icon">&#9632;</span> Applications
+        </a>
+        <a href="#" class="nav-item" data-section="documents">
+          <span class="nav-icon">&#9632;</span> Documents
+        </a>
+        <a href="#" class="nav-item" data-section="scholarships">
+          <span class="nav-icon">&#9632;</span> Scholarships
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <span id="universityName">University</span>
+          <small id="universityEmail"></small>
+        </div>
+        <button id="logoutBtn" class="btn btn-outline btn-sm">Logout</button>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <h2 id="pageTitle">University Dashboard</h2>
+        <div class="topbar-actions">
+          <span id="lastUpdated"></span>
+          <button id="refreshBtn" class="btn btn-outline btn-sm">&#8635; Refresh</button>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <section id="section-overview" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Universities Listed</div><div class="stat-value" id="statUniversities">-</div></div>
+          <div class="stat-card"><div class="stat-label">Total Capacity</div><div class="stat-value" id="statCapacity">-</div></div>
+          <div class="stat-card"><div class="stat-label">Applications</div><div class="stat-value" id="statApplications">-</div></div>
+          <div class="stat-card"><div class="stat-label">Fill Rate</div><div class="stat-value" id="statFillRate">-</div></div>
+          <div class="stat-card"><div class="stat-label">Documents</div><div class="stat-value" id="statDocuments">-</div></div>
+          <div class="stat-card"><div class="stat-label">Scholarships</div><div class="stat-value" id="statScholarships">-</div></div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card full">
+            <h3>Applications by University</h3>
+            <div class="bar-chart" id="uniApplicationsChart"></div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card half">
+            <h3>Application Stages</h3>
+            <div class="pie-chart" id="stagesChart"></div>
+          </div>
+          <div class="chart-card half">
+            <h3>Documents by University</h3>
+            <div class="pie-chart" id="documentsChart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Applications Section -->
+      <section id="section-applications" class="section">
+        <div class="table-card">
+          <h3>Applications Per University</h3>
+          <div class="table-wrapper">
+            <table id="applicationsTable">
+              <thead><tr><th>University</th><th>Total</th><th>Accepted</th><th>Pending</th><th>Rejected</th></tr></thead>
+              <tbody id="applicationsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Documents Section -->
+      <section id="section-documents" class="section">
+        <div class="table-card">
+          <h3>Documents by University</h3>
+          <div class="table-wrapper">
+            <table id="documentsTable">
+              <thead><tr><th>University</th><th>Uploaded</th><th>Verified</th><th>Pending</th></tr></thead>
+              <tbody id="documentsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scholarships Section -->
+      <section id="section-scholarships" class="section">
+        <div class="chart-card full">
+          <h3>Matching Scholarships</h3>
+          <div id="scholarshipsList" class="scholarship-grid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/university-dashboard.js"></script>
+</body>
+</html>

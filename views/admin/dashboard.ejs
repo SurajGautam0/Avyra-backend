@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Avyra</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">Avyra</div>
+        <span class="badge badge-admin">Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+          <span class="nav-icon">&#9632;</span> Overview
+        </a>
+        <a href="#" class="nav-item" data-section="analytics">
+          <span class="nav-icon">&#9632;</span> Analytics
+        </a>
+        <a href="#" class="nav-item" data-section="users">
+          <span class="nav-icon">&#9632;</span> Users
+        </a>
+        <a href="#" class="nav-item" data-section="audit">
+          <span class="nav-icon">&#9632;</span> Audit Logs
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <span id="adminName">Admin</span>
+          <small id="adminEmail"></small>
+        </div>
+        <button id="logoutBtn" class="btn btn-outline btn-sm">Logout</button>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <h2 id="pageTitle">Dashboard Overview</h2>
+        <div class="topbar-actions">
+          <span id="lastUpdated"></span>
+          <button id="refreshBtn" class="btn btn-outline btn-sm">&#8635; Refresh</button>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <section id="section-overview" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="statTotalUsers">-</div></div>
+          <div class="stat-card"><div class="stat-label">Active Today</div><div class="stat-value" id="statActiveToday">-</div></div>
+          <div class="stat-card"><div class="stat-label">Applications</div><div class="stat-value" id="statApplications">-</div></div>
+          <div class="stat-card"><div class="stat-label">Documents</div><div class="stat-value" id="statDocuments">-</div></div>
+          <div class="stat-card"><div class="stat-label">Universities</div><div class="stat-value" id="statUniversities">-</div></div>
+          <div class="stat-card"><div class="stat-label">Pending KYC</div><div class="stat-value" id="statPendingKyc">-</div></div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card">
+            <h3>User Signups by Month</h3>
+            <div class="bar-chart" id="signupsChart"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Applications by Month</h3>
+            <div class="bar-chart" id="applicationsChart"></div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-card half">
+            <h3>User Roles</h3>
+            <div class="pie-chart" id="rolesChart"></div>
+          </div>
+          <div class="chart-card half">
+            <h3>Application Stages</h3>
+            <div class="pie-chart" id="stagesChart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="section-analytics" class="section">
+        <div class="chart-row">
+          <div class="chart-card full">
+            <h3>AI Feature Utilization</h3>
+            <div id="aiMonitoring" class="ai-grid"></div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-card full">
+            <h3>Document Categories</h3>
+            <div class="bar-chart" id="docCategoriesChart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Users Section -->
+      <section id="section-users" class="section">
+        <div class="table-card">
+          <h3>All Users</h3>
+          <div class="table-controls">
+            <input type="text" id="userSearch" placeholder="Search users..." class="search-input">
+            <select id="roleFilter" class="filter-select">
+              <option value="">All Roles</option>
+              <option value="admin">Admin</option>
+              <option value="consultant">Consultant</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+          <div class="table-wrapper">
+            <table id="usersTable">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Action</th></tr></thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Audit Logs Section -->
+      <section id="section-audit" class="section">
+        <div class="table-card">
+          <h3>Recent Activity</h3>
+          <div class="table-wrapper">
+            <table id="auditTable">
+              <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Resource</th><th>Severity</th></tr></thead>
+              <tbody id="auditBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>
