@@ -1,144 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consultant Dashboard - Avyra</title>
   <link rel="stylesheet" href="/css/dashboard.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
+  <button class="mobile-toggle" id="mobileToggle">☰</button>
   <div class="app-layout">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <div class="logo">EduBridge</div>
+        <div class="logo"><span class="logo-gradient">Avyra</span></div>
         <span class="badge badge-consultant">Consultant</span>
       </div>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-section="overview">
-          <span class="nav-icon">&#9632;</span> Dashboard
-        </a>
-        <a href="#" class="nav-item" data-section="requests">
-          <span class="nav-icon">&#9632;</span> Student Requests
-        </a>
-        <a href="#" class="nav-item" data-section="crm">
-          <span class="nav-icon">&#9632;</span> Student CRM
-        </a>
-        <a href="#" class="nav-item" data-section="insights">
-          <span class="nav-icon">&#9632;</span> AI Insights
-        </a>
-        <a href="#" class="nav-item" data-section="verification">
-          <span class="nav-icon">&#9632;</span> Doc Verification
-        </a>
-        <a href="#" class="nav-item" data-section="notes">
-          <span class="nav-icon">&#9632;</span> Notes
-        </a>
-        <a href="#" class="nav-item" data-section="calendar">
-          <span class="nav-icon">&#9632;</span> Calendar
-        </a>
-        <a href="#" class="nav-item" data-section="appointments">
-          <span class="nav-icon">&#9632;</span> Appointments
-        </a>
-        <a href="#" class="nav-item" data-section="chat">
-          <span class="nav-icon">&#9632;</span> Chat
-        </a>
-        <a href="#" class="nav-item" data-section="video">
-          <span class="nav-icon">&#9632;</span> Video Meetings
-        </a>
-        <a href="#" class="nav-item" data-section="documents">
-          <span class="nav-icon">&#9632;</span> Documents
-        </a>
-        <a href="#" class="nav-item" data-section="earnings">
-          <span class="nav-icon">&#9632;</span> Earnings
-        </a>
-        <a href="#" class="nav-item" data-section="reviews">
-          <span class="nav-icon">&#9632;</span> Reviews
-        </a>
-        <a href="#" class="nav-item" data-section="analytics">
-          <span class="nav-icon">&#9632;</span> Analytics
-        </a>
-        <a href="#" class="nav-item" data-section="profile">
-          <span class="nav-icon">&#9632;</span> Profile
-        </a>
-        <a href="#" class="nav-item" data-section="settings">
-          <span class="nav-icon">&#9632;</span> Settings
-        </a>
+        <a class="nav-item active" data-section="overview"><span class="nav-icon">📊</span> Dashboard</a>
+        <a class="nav-item" data-section="crm"><span class="nav-icon">👥</span> Student CRM</a>
+        <a class="nav-item" data-section="requests"><span class="nav-icon">📩</span> Requests <span class="nav-badge" id="sidebarPending">0</span></a>
+        <a class="nav-item" data-section="verification"><span class="nav-icon">✅</span> Doc Verification</a>
+        <a class="nav-item" data-section="insights"><span class="nav-icon">🤖</span> AI Insights</a>
+        <a class="nav-item" data-section="notes"><span class="nav-icon">📝</span> Notes</a>
+        <a class="nav-item" data-section="calendar"><span class="nav-icon">📅</span> Calendar</a>
+        <a class="nav-item" data-section="chat"><span class="nav-icon">💬</span> Chat</a>
+        <a class="nav-item" data-section="documents"><span class="nav-icon">📄</span> Documents</a>
+        <a class="nav-item" data-section="earnings"><span class="nav-icon">💰</span> Earnings</a>
+        <a class="nav-item" data-section="analytics"><span class="nav-icon">📈</span> Analytics</a>
+        <a class="nav-item" data-section="profile"><span class="nav-icon">👤</span> Profile</a>
+        <a class="nav-item" data-section="settings"><span class="nav-icon">⚙️</span> Settings</a>
       </nav>
       <div class="sidebar-footer">
+        <div class="avatar" id="consultantAvatar">P</div>
         <div class="user-info">
           <span id="consultantName">Consultant</span>
           <small id="consultantEmail"></small>
         </div>
-        <button id="logoutBtn" class="btn btn-outline btn-sm">Logout</button>
+        <button id="logoutBtn" class="btn btn-ghost btn-icon" title="Logout">🚪</button>
       </div>
     </aside>
+
     <main class="main-content">
-      <header class="dashboard-header">
-        <div class="header-copy">
+      <div class="dashboard-header">
+        <div class="header-left">
           <span class="eyebrow">Dashboard</span>
-          <h1>Welcome back, Dr. Priya</h1>
-          <p class="dashboard-subtitle">Your daily coaching workspace and student workflow overview</p>
+          <h1>Welcome back, <span id="greetingName">Dr. Priya</span></h1>
+          <span class="subtitle">Your daily coaching workspace and student workflow overview</span>
         </div>
         <div class="header-actions">
-          <span id="lastUpdated">Updated just now</span>
-          <button id="refreshBtn" class="btn btn-outline btn-sm">Refresh</button>
+          <small id="lastUpdated">Updated just now</small>
+          <button id="refreshBtn" class="btn btn-outline btn-sm">🔄 Refresh</button>
         </div>
-      </header>
+      </div>
 
-      <section id="section-overview" class="section active overview-section">
+      <section id="section-overview" class="section active">
         <div class="kpi-row">
           <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(108,92,231,0.1);color:#6c5ce7;">📅</div>
             <span class="metric-label">Today's Meetings</span>
-            <strong id="statMeetings">-</strong>
-            <span class="metric-meta">+2 from yesterday</span>
+            <div class="metric-value" id="statMeetings">-</div>
+            <div class="metric-change up">↑ +2 from yesterday</div>
+            <div class="metric-bar"><span style="width:65%;background:#6c5ce7;"></span></div>
           </div>
           <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(0,184,148,0.1);color:#00b894;">💰</div>
             <span class="metric-label">Monthly Revenue</span>
-            <strong id="statRevenue">-</strong>
-            <span class="metric-meta">+12% this month</span>
+            <div class="metric-value" id="statRevenue">-</div>
+            <div class="metric-change up">↑ +12% this month</div>
+            <div class="metric-bar"><span style="width:72%;background:#00b894;"></span></div>
           </div>
           <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(253,203,110,0.15);color:#b7950b;">📩</div>
             <span class="metric-label">Pending Requests</span>
-            <strong id="statPendingRequests">-</strong>
-            <span class="metric-meta">Action required</span>
+            <div class="metric-value" id="statPendingRequests">-</div>
+            <div class="metric-change">· Action required</div>
+            <div class="metric-bar"><span style="width:35%;background:#fdcb6e;"></span></div>
           </div>
           <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(116,185,255,0.1);color:#0984e3;">👥</div>
             <span class="metric-label">Active Students</span>
-            <strong id="statActiveStudents">-</strong>
-            <span class="metric-meta">+5 new</span>
+            <div class="metric-value" id="statActiveStudents">-</div>
+            <div class="metric-change up">↑ +5 new</div>
+            <div class="metric-bar"><span style="width:82%;background:#0984e3;"></span></div>
           </div>
         </div>
 
-        <div class="dashboard-grid">
-          <div class="chart-card chart-panel">
-            <div class="panel-header">
-              <h3>Revenue Overview</h3>
+        <div class="dashboard-grid cols-2">
+          <div class="card">
+            <div class="card-header">
+              <h3>📈 Revenue Overview</h3>
             </div>
-            <div id="revenueChart" class="bar-chart"></div>
+            <div class="card-body">
+              <div id="revenueChart" class="bar-chart"></div>
+            </div>
           </div>
-          <aside class="sidebar-panel schedule-panel panel-card">
-            <div class="panel-header">
-              <h3>Today's Schedule</h3>
+          <div class="card">
+            <div class="card-header">
+              <h3>📅 Today's Schedule</h3>
+              <span class="tag">5 events</span>
             </div>
-            <div id="scheduleList" class="schedule-list"></div>
-          </aside>
+            <div class="card-body">
+              <div id="scheduleList" class="list"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="dashboard-grid dashboard-grid-2">
-          <div class="panel-card request-panel">
-            <div class="panel-header">
-              <h3>New Requests</h3><span class="panel-tag" id="pendingCount">0 Pending</span>
+        <div class="dashboard-grid cols-2">
+          <div class="card">
+            <div class="card-header">
+              <h3>📩 New Requests</h3>
+              <span class="tag" id="pendingCount">0 Pending</span>
             </div>
-            <div id="newRequests" class="request-list"></div>
-          </div>
-          <div class="panel-card progress-panel">
-            <div class="panel-header">
-              <h3>Student Progress</h3>
+            <div class="card-body">
+              <div id="newRequests" class="list"></div>
             </div>
-            <div id="progressList" class="progress-list"></div>
           </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>📈 Student Progress</h3>
+            </div>
+            <div class="card-body">
+              <div id="progressList" class="list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-crm" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">👥</div>
+          <h3>Student CRM</h3>
+          <p>Manage your student relationships and track interactions</p>
+        </div>
+      </section>
+
+      <section id="section-requests" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">📩</div>
+          <h3>Student Requests</h3>
+          <p>Review and respond to student inquiries</p>
+        </div>
+      </section>
+
+      <section id="section-verification" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">✅</div>
+          <h3>Document Verification</h3>
+          <p>Verify student documents and credentials</p>
+        </div>
+      </section>
+
+      <section id="section-insights" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">🤖</div>
+          <h3>AI Insights</h3>
+          <p>AI-powered recommendations and student analytics</p>
+        </div>
+      </section>
+
+      <section id="section-notes" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">📝</div>
+          <h3>Notes</h3>
+          <p>Personal and shared notes for student counseling</p>
+        </div>
+      </section>
+
+      <section id="section-calendar" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">📅</div>
+          <h3>Calendar</h3>
+          <p>Schedule and manage appointments</p>
+        </div>
+      </section>
+
+      <section id="section-chat" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">💬</div>
+          <h3>Chat</h3>
+          <p>Real-time messaging with students</p>
+        </div>
+      </section>
+
+      <section id="section-documents" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">📄</div>
+          <h3>Documents</h3>
+          <p>Upload and manage student documents</p>
+        </div>
+      </section>
+
+      <section id="section-earnings" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">💰</div>
+          <h3>Earnings</h3>
+          <p>Track your revenue and payouts</p>
+        </div>
+      </section>
+
+      <section id="section-analytics" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">📈</div>
+          <h3>Analytics</h3>
+          <p>Detailed analytics on student performance</p>
+        </div>
+      </section>
+
+      <section id="section-profile" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">👤</div>
+          <h3>Profile</h3>
+          <p>Manage your professional profile and preferences</p>
+        </div>
+      </section>
+
+      <section id="section-settings" class="section">
+        <div class="empty-state">
+          <div class="empty-icon">⚙️</div>
+          <h3>Settings</h3>
+          <p>Configure your account and notification preferences</p>
         </div>
       </section>
     </main>
@@ -146,5 +226,4 @@
   <script src="/js/api.js"></script>
   <script src="/js/consultant-dashboard.js"></script>
 </body>
-
 </html>

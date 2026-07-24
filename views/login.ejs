@@ -5,28 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avyra - Dashboard Login</title>
   <link rel="stylesheet" href="/css/dashboard.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="login-page">
-  <div class="login-container">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="logo">Avyra</div>
-        <h1>Dashboard Login</h1>
-        <p>Sign in to access your dashboard</p>
+<body>
+  <div class="login-page">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="logo">Avyra</div>
+          <h1>Welcome back</h1>
+          <p>Sign in to your dashboard</p>
+        </div>
+        <form id="loginForm" class="login-form">
+          <div id="loginError" class="error-message" style="display:none;"></div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" value="admin@eduz.app" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" value="Admin@123456" required>
+          </div>
+          <button type="submit" id="loginBtn" class="btn btn-primary btn-full">Sign In</button>
+        </form>
       </div>
-      <form id="loginForm" class="login-form">
-        <div id="loginError" class="error-message" style="display:none"></div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
-      </form>
     </div>
   </div>
   <script src="/js/api.js"></script>
