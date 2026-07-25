@@ -48,7 +48,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
 // Middleware
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://cdn.socket.io"],
+      styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+      fontSrc: ["'self'", "https:", "data:"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "https://avyra-api.onrender.com", "wss://avyra-api.onrender.com"],
+      frameSrc: ["'self'", "https://meet.jit.si"],
+      upgradeInsecureRequests: [],
+    },
+  },
+}));
 const corsOrigins = config.corsOrigin ? config.corsOrigin.split(',').map(s => s.trim()).filter(Boolean) : ['http://localhost:3000'];
 app.use(cors({
   origin: (origin, cb) => {
