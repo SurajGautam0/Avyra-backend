@@ -110,6 +110,10 @@ document.querySelectorAll('.nav-item').forEach(item=>{
     item.classList.add('active');
     const sec=document.getElementById('section-'+item.dataset.section);
     if(sec){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); sec.classList.add('active'); }
+    if (item.dataset.section === 'chat' && typeof ChatApp !== 'undefined' && !ChatApp.socket) {
+      const user = getUser();
+      if (user) ChatApp.init(user);
+    }
   });
 });
 

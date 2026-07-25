@@ -125,6 +125,7 @@ io.on('connection', (socket) => {
 
   chatHandler(io, socket);
   notificationHandler(io, socket);
+  require('./socket/video')(io, socket);
 
   socket.on('disconnect', () => console.log('Client disconnected:', socket.id));
 });
