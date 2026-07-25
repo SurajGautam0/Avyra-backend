@@ -49,7 +49,14 @@ app.set('views', path.join(__dirname, '../views'));
 
 // Middleware
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: config.corsOrigin.split(','), credentials: true }));
+const corsOrigins = config.corsOrigin ? config.corsOrigin.split(',').map(s => s.trim()).filter(Boolean) : ['http://localhost:3000'];
+app.use(cors({
+  origin: (origin, cb) => {
+    if (!origin || corsOrigins.includes(origin) || corsOrigins.includes('*')) return cb(null, true);
+    cb(null, true); // allow all for dev
+  },
+  credentials: true,
+}));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
